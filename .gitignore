@@ -1,5 +1,6 @@
 Model
 *.idea
+Testing code phase/result.json
 
 # Created by https://www.toptal.com/developers/gitignore/api/pycharm,visualstudiocode,python,jupyternotebooks,opencv
 # Edit at https://www.toptal.com/developers/gitignore?templates=pycharm,visualstudiocode,python,jupyternotebooks,opencv

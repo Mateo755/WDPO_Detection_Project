@@ -38,8 +38,14 @@ def stackImages(scale,imgArray):
         ver = hor
     return ver
 
+
 def getCountour(img):
     countours, hierarchy = cv2.findContours(img,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
+    aspen = 0
+    birch = 0
+    hazel = 0
+    maple = 0
+    oak = 0
     for cnt in countours:
         area = cv2.contourArea(cnt)
         #print(area)
@@ -50,13 +56,34 @@ def getCountour(img):
 
 
             prediction, index = classifier.getPrediction(roi,draw=False)
+            leaf = ResultMap[index]
 
-
-            print('####' * 10)
-            print(index)
-            print('Prediction is: ', ResultMap[index])
+            #print('####' * 10)
+            #print(index)
+            #print('Prediction is: ', ResultMap[index])
 
             cv2.putText(imgCountour, ResultMap[index], (x,y), cv2.FONT_HERSHEY_COMPLEX, 2 ,(255,0,255),1)
+
+            match leaf:
+                case "aspen":
+                    aspen += 1
+                case "birch":
+                    birch += 1
+                case "hazel":
+                    hazel += 1
+                case "maple":
+                    maple += 1
+                case "oak":
+                    oak += 1
+                case _:
+                    print("Undefined leaf.")
+
+    result = {'aspen': aspen, 'birch': birch, 'hazel': hazel, 'maple': maple, 'oak': oak}
+    print(result)
+
+    with open(result_json_path, 'w') as json_file:
+        json.dump(result, json_file, indent=2)
+
 
 
 TrainClasses =  {'aspen': 0, 'birch': 1, 'hazel': 2, 'maple': 3, 'oak': 4}
@@ -67,7 +94,8 @@ for idx, leaf in zip(TrainClasses.values(),TrainClasses.keys()):
     ResultMap[idx]=leaf
 
 
-input_dir = 'data'
+input_dir = '../data'
+result_json_path = "result.json"
 
 # Uzyskaj listę plików w folderze
 files = os.listdir(input_dir)
@@ -77,7 +105,7 @@ num_files = len(files)
 
 input_path = os.path.join(input_dir, '0037.jpg')
 
-classifier = Classifier('Model/leaves_classifier_model.h5','Model/labels.txt')
+classifier = Classifier('../Model/leaves_classifier_model.h5','../Model/labels.txt')
 
 img = cv2.imread(input_path)
 #img = cv2.resize(img, dsize=(1000, 800), interpolation=cv2.INTER_LANCZOS4)
