@@ -52,7 +52,7 @@ def detect(img_path: str) -> Dict[str, int]:
 
     for cnt in countours:
         area = cv2.contourArea(cnt)
-        if area > 40:
+        if area > 80:
             x, y, w, h = cv2.boundingRect(cnt)
             roi = img[y:y + h, x:x + w]
 

@@ -49,7 +49,7 @@ def getCountour(img):
     for cnt in countours:
         area = cv2.contourArea(cnt)
         #print(area)
-        if area > 40:
+        if area > 80:
             x, y, w, h = cv2.boundingRect(cnt)
             cv2.rectangle(imgCountour, (x, y), (x + w, y + h), (0, 255, 0), 2)
             roi = imgCountour[y:y + h, x:x + w]
@@ -103,7 +103,7 @@ files = os.listdir(input_dir)
 # Zlicz liczbę plików
 num_files = len(files)
 
-input_path = os.path.join(input_dir, '0037.jpg')
+input_path = os.path.join(input_dir, '0016.jpg')
 
 classifier = Classifier('../Model/leaves_classifier_model.h5','../Model/labels.txt')
 
