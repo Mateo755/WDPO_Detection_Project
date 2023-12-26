@@ -103,7 +103,7 @@ files = os.listdir(input_dir)
 # Zlicz liczbę plików
 num_files = len(files)
 
-input_path = os.path.join(input_dir, '0016.jpg')
+input_path = os.path.join(input_dir, '0015.jpg')
 
 classifier = Classifier('../Model/leaves_classifier_model.h5','../Model/labels.txt')
 
